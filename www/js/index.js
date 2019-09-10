@@ -59,11 +59,26 @@ function updateUI(Lat, Long) {
 app.initialize();
 
 var lights = [];
-
+var pos = null;
+var uuid = null;
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementsByClassName('red-light')[0].addEventListener('click', getLocationRed);
-    document.getElementsByClassName('green-light')[0].addEventListener('click', getLocationGreen);
+    var watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, enableHighAccuracy: true });
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true});
     //document.getElementsByClassName('view-lights')[0].addEventListener('click', viewLights);
+
+
+    function onSuccess(position){
+        pos = position;
+        uuid = device.uuid;
+        document.getElementsByClassName('red-light')[0].addEventListener('click', onLocationSuccessRed);
+        document.getElementsByClassName('green-light')[0].addEventListener('click', onLocationSuccessGreen);
+    }
+
+    function onError(error){
+        alert(error);
+    }
+
+
 
     $('.view-lights').click(function(){
         getLights();
@@ -81,47 +96,59 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+
+    function positionSuccess(position) {
+        pos = position;
+        //return pos; 
+    }
+
+    function postionError(){
+        alert("An error has occurred");
+    }
     
     function getLocationRed() {
-        navigator.geolocation.getCurrentPosition(onLocationSuccessRed, onLocationError, { enableHighAccuracy: true });
+        //navigator.geolocation.getCurrentPosition(onLocationSuccessRed, onLocationError, { enableHighAccuracy: true });
+
     }
 
     function getLocationGreen() {
-        navigator.geolocation.getCurrentPosition(onLocationSuccessGreen, onLocationError, { enableHighAccuracy: true });
+        //navigator.geolocation.getCurrentPosition(onLocationSuccessGreen, onLocationError, { enableHighAccuracy: true });
     }
 
-    function onLocationSuccessRed(position) {
-        Latitude = position.coords.latitude;
-        Longitude = position.coords.longitude;
+    function onLocationSuccessRed() {
+        Latitude = pos.coords.latitude;
+        Longitude = pos.coords.longitude;
         light = {
             Lat: Latitude,
             Long: Longitude,
-            color: "red"
+            color: "red",
+            uuid: uuid
         };
         const options = {
             method: 'post',
             data: light
         };
         console.log("Sending Light");
-        cordova.plugin.http.setDataSerializer('json');
+        //cordova.plugin.http.setDataSerializer('json');
         httpClient.post("https://6571c241.ngrok.io/api/v1/stopLights", light, success);
         
     }
 
-    function onLocationSuccessGreen(position) {
-        Latitude = position.coords.latitude;
-        Longitude = position.coords.longitude;
+    function onLocationSuccessGreen() {
+        Latitude = pos.coords.latitude;
+        Longitude = pos.coords.longitude;
         light = {
             Lat: Latitude,
             Long: Longitude,
-            color: "green"
+            color: "green",
+            uuid: uuid
         };
         const options = {
             method: 'post',
             data: light
         };
         console.log("Sending Light");
-        cordova.plugin.http.setDataSerializer('json');
+        //cordova.plugin.http.setDataSerializer('json');
         httpClient.post("https://6571c241.ngrok.io/api/v1/stopLights", light, success);
         
     }
