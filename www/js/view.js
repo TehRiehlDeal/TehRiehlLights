@@ -5,9 +5,9 @@ function getLights(){
         //console.log(data['stopLights'][0]);
         for (var i = 0; i < data['stopLights'].length; i++) {
             var light = data['stopLights'][i];
-            if (light['color'] == "green") {
+            if (light['color'] == "green" && light['uuid'] == uuid) {
                 greenLights.push(light);
-            } else if (light['color'] == "red") {
+            } else if (light['color'] == "red" && light['uuid'] == uuid) {
                 redLights.push(light);
             }
         }
