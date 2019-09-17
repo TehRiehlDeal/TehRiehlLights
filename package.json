@@ -22,6 +22,7 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-http": "^1.2.0",
+    "cordova-plugin-media": "^5.0.3",
     "cordova-plugin-x-toast": "^2.7.2",
     "cordova-sqlite-storage": "^3.3.0"
   },
@@ -39,7 +40,10 @@
         "OKHTTP_VERSION": "3.10.0"
       },
       "cordova-plugin-x-toast": {},
-      "cordova-plugin-device": {}
+      "cordova-plugin-device": {},
+      "cordova-plugin-media": {
+        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
+      }
     },
     "platforms": [
       "ios",

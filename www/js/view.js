@@ -1,7 +1,7 @@
 function getLights(){
     var greenLights = [];
     var redLights = [];
-    $.get("https://6571c241.ngrok.io/api/v1/stopLights", function (data, textStatus, jqXHR) {
+    $.get("https://6f01bc87.ngrok.io/api/v1/stopLights", function (data, textStatus, jqXHR) {
         //console.log(data['stopLights'][0]);
         for (var i = 0; i < data['stopLights'].length; i++) {
             var light = data['stopLights'][i];

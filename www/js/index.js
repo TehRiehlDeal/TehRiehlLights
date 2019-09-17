@@ -61,158 +61,100 @@ app.initialize();
 var lights = [];
 var pos = null;
 var uuid = null;
-document.addEventListener("DOMContentLoaded", function () {
-    var watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, enableHighAccuracy: true });
-    navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true});
-    //document.getElementsByClassName('view-lights')[0].addEventListener('click', viewLights);
+var watchID = null;
 
+function onSuccess(position) {
+    pos = position;
+}
 
-    function onSuccess(position){
-        pos = position;
-        uuid = device.uuid;
-        document.getElementsByClassName('red-light')[0].addEventListener('click', onLocationSuccessRed);
-        document.getElementsByClassName('green-light')[0].addEventListener('click', onLocationSuccessGreen);
-    }
+function onError(error) {
+    alert(error);
+}
 
-    function onError(error){
-        alert(error);
-    }
+$('.view-lights').click(function () {
+    getLights();
+    $('.greenTable').empty();
+    $('.redTable').empty();
+    $('.red-light').hide();
+    $('.green-light').hide();
+    $('.view').show();
+});
 
+$('.add-lights').click(function () {
+    $('.red-light').show();
+    $('.green-light').show();
+    $('.view').hide();
+});
 
+function positionSuccess(position) {
+    pos = position;
+    //alert(pos);
+    //return pos; 
+}
 
-    $('.view-lights').click(function(){
-        getLights();
-        $('.greenTable').empty();
-        $('.redTable').empty();
-        $('.red-light').hide();
-        $('.green-light').hide();
-        $('.view').show();
-    });
+function postionError() {
+    alert("An error has occurred");
+}
 
-    $('.add-lights').click(function () {
-        $('.red-light').show();
-        $('.green-light').show();
-        $('.view').hide();
-    });
+function onLocationSuccessRed() {
+    Latitude = pos.coords.latitude;
+    Longitude = pos.coords.longitude;
+    light = {
+        Lat: Latitude,
+        Long: Longitude,
+        color: "red",
+        uuid: uuid
+    };
+    const options = {
+        method: 'post',
+        data: light
+    };
+    console.log("Sending Light");
+    httpClient.post("https://6f01bc87.ngrok.io/api/v1/stopLights", light, success);
 
+}
 
+function onLocationSuccessGreen() {
+    Latitude = pos.coords.latitude;
+    Longitude = pos.coords.longitude;
+    light = {
+        Lat: Latitude,
+        Long: Longitude,
+        color: "green",
+        uuid: uuid
+    };
+    const options = {
+        method: 'post',
+        data: light
+    };
+    console.log("Sending Light");
+    httpClient.post("https://6f01bc87.ngrok.io/api/v1/stopLights", light, success);
 
-    function positionSuccess(position) {
-        pos = position;
-        //return pos; 
-    }
+}
 
-    function postionError(){
-        alert("An error has occurred");
-    }
-    
-    function getLocationRed() {
-        //navigator.geolocation.getCurrentPosition(onLocationSuccessRed, onLocationError, { enableHighAccuracy: true });
+function success() {
+    window.plugins.toast.showShortBottom("Light has successfully been recorded.", function (a) { console.log("toast success: " + a) }, function (b) { alert('toast error: ' + b) });
+}
 
-    }
+function onLocationError() {
+    alert("an error has occured");
+}
 
-    function getLocationGreen() {
-        //navigator.geolocation.getCurrentPosition(onLocationSuccessGreen, onLocationError, { enableHighAccuracy: true });
-    }
+//On Ready function
+document.addEventListener("deviceready", function () {
+    watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, timeout: 5000, enableHighAccuracy: true });
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
+    uuid = device.uuid;
+    document.getElementsByClassName('red-light')[0].addEventListener('click', onLocationSuccessRed);
+    document.getElementsByClassName('green-light')[0].addEventListener('click', onLocationSuccessGreen);
+});
 
-    function onLocationSuccessRed() {
-        Latitude = pos.coords.latitude;
-        Longitude = pos.coords.longitude;
-        light = {
-            Lat: Latitude,
-            Long: Longitude,
-            color: "red",
-            uuid: uuid
-        };
-        const options = {
-            method: 'post',
-            data: light
-        };
-        console.log("Sending Light");
-        //cordova.plugin.http.setDataSerializer('json');
-        httpClient.post("https://6571c241.ngrok.io/api/v1/stopLights", light, success);
-        
-    }
+//On Pause function
+document.addEventListener("pause", function(){
+    navigator.geolocation.clearWatch(watchID);
+});
 
-    function onLocationSuccessGreen() {
-        Latitude = pos.coords.latitude;
-        Longitude = pos.coords.longitude;
-        light = {
-            Lat: Latitude,
-            Long: Longitude,
-            color: "green",
-            uuid: uuid
-        };
-        const options = {
-            method: 'post',
-            data: light
-        };
-        console.log("Sending Light");
-        //cordova.plugin.http.setDataSerializer('json');
-        httpClient.post("https://6571c241.ngrok.io/api/v1/stopLights", light, success);
-        
-    }
-
-    function success(){
-        window.plugins.toast.showShortBottom("Light has successfully been recorded.", function(a){ console.log("toast success: " + a)}, function(b){alert('toast error: ' + b)});
-    }
-
-    function onLocationError() {
-        alert("an error has occured");
-    }
-
-    var result = null;
-    var logOb = null;
-    
-    function viewLights(){
-        console.log("button pressed");
-        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir){
-            console.log("got main dir", dir.name);
-            dir.root.getFile('lights.csv', {
-                create: true,
-                exclusive: false
-            }, function(file){
-                var csv = '';
-                for (light in lights){
-                    csv = csv + "" + light['time'] + "," +  light['Lat'] + "," + light['Long'] + "," + light['color'] + "\n";
-                }
-                writeLog(file, csv);
-            });
-        });
-    }
-
-    function writeLog(dir, str){
-        dir.createWriter(function(fileWriter){
-            fileWriter.onwriteend = function(){
-                console.log("Successful file write....");
-                readFile(dir);
-            }
-
-            fileWriter.onerror = function(e){
-                console.log("Failed file write: " + e.toString());
-            }
-
-            var data = new Blob([str], {type: 'text/plain'});
-
-            fileWriter.write(data);
-        });
-    }
-
-    function readFile(fileEntry){
-        fileEntry.file(function(file){
-            var reader = new FileReader();
-
-            reader.onloadend = function() {
-                console.log("Successful fule read: " + this.result);
-                displayFileData(fileEntry.fullPath = ": " + this.result);
-            
-            };
-
-            reader.readAsText(file);
-
-        }, onErrorReadFile);
-    }
-
-
-
+//On Resume function
+document.addEventListener("resume", function(){
+    watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, timeout: 5000, enableHighAccuracy: true });
 });
