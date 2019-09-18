@@ -100,6 +100,7 @@ function onLocationSuccessRed() {
     Latitude = pos.coords.latitude;
     Longitude = pos.coords.longitude;
     light = {
+        time: Date(Date.now()),
         Lat: Latitude,
         Long: Longitude,
         color: "red",
@@ -118,6 +119,7 @@ function onLocationSuccessGreen() {
     Latitude = pos.coords.latitude;
     Longitude = pos.coords.longitude;
     light = {
+        time: Date(Date.now()),
         Lat: Latitude,
         Long: Longitude,
         color: "green",
