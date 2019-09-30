@@ -33,6 +33,7 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/c14130d115.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script type="text/javascript" src='js/jquery.min.js'></script>
@@ -76,9 +77,23 @@
                 </table>
             </div>
         </div>
-        <div class='wrapper'>
+        <!--<div class='wrapper'>
             <div class='add-lights text-center'><p class='h2 align-middle'>Add Lights</p></div>
             <div class="view-lights text-center"><p class='h2 align-middle'>View Lights</p></div>
+        </div>-->
+
+        <div id="myMenuToggle">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+        <div id="myMenu">
+            <a class="dropdown-item h1 add-lights" href="#">Add Lights</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item h1 view-lights" href="#">View Lights</a>
+            <a class="dropdown-item h2" href="#">On Map</a>
+            <a class="dropdown-item h2" href="#">Pie Chart</a>
+            <a class="dropdown-item h2" href="#">View all</a>
         </div>
 
         <script src='js/view.js'></script>

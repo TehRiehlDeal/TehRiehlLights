@@ -109,14 +109,14 @@ h1 {
 
 .red-light {
     position: relative;
-    height: 45vh;
+    height: 50vh;
     width: 100vw;
     background: red;
 }
 
 .green-light {
     position: relative;
-    height: 45vh;
+    height: 50vh;
     width: 100vw;
     background: green;
 }
@@ -135,19 +135,19 @@ h1 {
 
 .view-green {
     width: 100vw;
-    height: 45vh;
+    height: 50vh;
     overflow: hidden;
     overflow-y: scroll;
 }
 
 .view-red {
     width: 100vw;
-    height: 45vh;
+    height: 50vh;
     overflow: hidden;
     overflow-y: scroll;
 }
 
-.wrapper {
+/*.wrapper {
     position: relative;
     height: 10vh;
     width: 100vw;
@@ -160,23 +160,60 @@ h1 {
     float: left;
     display: table;
     background: lightyellow;
-}
+}*/
 
 .add-lights p {
     vertical-align: middle;
     display: table-cell;
 }
 
-.view-lights {
+/*.view-lights {
     height: 10vh;
     width:  50vw;
     overflow: hidden;
     display: table;
     background: lightblue;
-}
+}*/
 
 .view-lights p {
     vertical-align: middle;
     display: table-cell;
 }
 
+#myMenu {
+    position: fixed;
+    width: 40vw;
+    top: 0;
+    right: -40vw;
+    border-left: #333 solid 5px;
+    border-bottom: #333 solid 5px;
+    text-align: center;
+    background: #fff;
+}
+
+
+#myMenuToggle{
+    position: fixed;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    top: 0;
+    right: 0vw;
+    border-left: #333 solid 5px;
+    border-bottom: #333 solid 5px;
+}
+
+a.h1 {
+    font-size: 2.5vh;
+}
+
+a.h2 {
+    font-size: 2vh;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 10vw;
+  height: 1vh;
+  background-color: #333;
+  margin: 1vh 0;
+  transition: 0.2s;
+}

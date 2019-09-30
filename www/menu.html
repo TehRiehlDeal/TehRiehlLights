@@ -1,8 +1,47 @@
 <html>
     <head>
-
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src='js/jquery.min.js'></script>
+<script src="https://kit.fontawesome.com/c14130d115.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        
+        <div id="myMenuToggle">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+        <div id="myMenu">
+            <a class="dropdown-item h1" href="#">Add Lights</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item h1" href="#">View Lights</a>
+            <a class="dropdown-item h2" href="#">On Map</a>
+            <a class="dropdown-item h2" href="#">Pie Chart</a>
+            <a class="dropdown-item h2" href="#">View all</a>
+        </div>
+
+
+        <script>
+            menuOut = false;
+            $('#myMenuToggle').click(function(){
+                if (menuOut){
+                    $('#myMenu').animate({
+                        right: '-40vw'
+                    }, 200);
+                    $('#myMenuToggle').animate({
+                        right: '0vw'
+                    }, 200);
+                menuOut = false;
+                } else {
+                    $('#myMenu').animate({
+                        right: '0vw'
+                    }, 200);
+                    $('#myMenuToggle').animate({
+                        right: '40vw'
+                    }, 200);
+                    menuOut = true;
+                }
+            });
+        </script>
     </body>
 </html>

@@ -23,6 +23,7 @@ var pos = null;
 var uuid = null;
 var watchID = null;
 var gpsOn = true;
+var menuOut = false;
 
 function onSuccess(position) {
     pos = position;
@@ -34,6 +35,7 @@ function onError(error) {
 
 $('.view-lights').click(function () {
     getLights();
+    animateMenu();
     $('.greenTable').empty();
     $('.redTable').empty();
     $('.red-light').hide();
@@ -46,6 +48,7 @@ $('.view-lights').click(function () {
 });
 
 $('.add-lights').click(function () {
+    animateMenu();
     $('.red-light').show();
     $('.green-light').show();
     $('.view').hide();
@@ -144,9 +147,7 @@ document.addEventListener("deviceready", function () {
     watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, timeout: 5000, enableHighAccuracy: true });
     navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
     uuid = device.uuid;
-    //document.getElementsByClassName('red-light')[0].addEventListener('click', onLocationSuccessRed);
     $('.red-light').click(onLocationSuccessRed);
-    //document.getElementsByClassName('green-light')[0].addEventListener('click', onLocationSuccessGreen);
     $('.green-light').click(onLocationSuccessGreen);
 });
 
@@ -166,5 +167,29 @@ document.addEventListener("resume", function () {
     } else {
         gpsOn = false;
     }
+});
+
+function animateMenu(){
+    if (menuOut) {
+        $('#myMenu').animate({
+            right: '-40vw'
+        }, 200);
+        $('#myMenuToggle').animate({
+            right: '0vw'
+        }, 200);
+        menuOut = false;
+    } else {
+        $('#myMenu').animate({
+            right: '0vw'
+        }, 200);
+        $('#myMenuToggle').animate({
+            right: '40vw'
+        }, 200);
+        menuOut = true;
+    }
+}
+
+$('#myMenuToggle').click(function () {
+    animateMenu();
 });
 
