@@ -16,47 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-    },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-    },
-
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-    },
-
-    getLocation: function() {
-        navigator.geolocation.getCurrentPosition(this.onLocationSuccess, this.onLocationError, { enableHighAccuracy: true });
-    },
-
-    onLocationSuccess: function(position) {
-        Latitude = position.coords.latitude;
-        Longitude = position.coords.longitude;
-        updateUI(Latitude, Longitude);
-    },
-
-    onLocationError: function() {
-        document.getElementsByClassName("red-light").innerHTML = "<h1> An Error has occured</h1>";
-    },
-
-};
-
-function updateUI(Lat, Long) {
-    
-    document.getElementsByClassName("red-light").innerHTML = "<h1>" + Lat + "</h1>";
-    document.getElementsByClassName("green-light").innerHTML = "<h1>" + Long + "</h1>";
-}
-
-app.initialize();
 
 var lights = [];
 var pos = null;
