@@ -57,8 +57,6 @@ $('.add-lights').click(function () {
 
 function positionSuccess(position) {
     pos = position;
-    //alert(pos);
-    //return pos; 
 }
 
 function postionError() {
@@ -80,8 +78,6 @@ function onLocationSuccessRed() {
         data: light
     };
     console.log("Sending Light");
-    //httpClient.post("https://theriehldeal.com/api/addLights.php", light, success);
-    //$.post("https://theriehldeal.com/api/addLights.php", light, success);
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -113,7 +109,6 @@ function onLocationSuccessGreen() {
         data: light
     };
     console.log("Sending Light");
-    //httpClient.post("https://theriehldeal.com/api/addLights.php", light, success);
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -149,17 +144,27 @@ document.addEventListener("deviceready", function () {
     watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, timeout: 5000, enableHighAccuracy: true });
     navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
     uuid = device.uuid;
-    document.getElementsByClassName('red-light')[0].addEventListener('click', onLocationSuccessRed);
-    document.getElementsByClassName('green-light')[0].addEventListener('click', onLocationSuccessGreen);
+    //document.getElementsByClassName('red-light')[0].addEventListener('click', onLocationSuccessRed);
+    $('.red-light').click(onLocationSuccessRed);
+    //document.getElementsByClassName('green-light')[0].addEventListener('click', onLocationSuccessGreen);
+    $('.green-light').click(onLocationSuccessGreen);
 });
 
 //On Pause function
 document.addEventListener("pause", function(){
-    navigator.geolocation.clearWatch(watchID);
+    if (gpsOn == true) {
+        navigator.geolocation.clearWatch(watchID);
+    } else {
+        gpsOn = false;
+    }
 });
 
 //On Resume function
-document.addEventListener("resume", function(){
-    watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, timeout: 5000, enableHighAccuracy: true });
+document.addEventListener("resume", function () {
+    if (gpsOn == true) {
+        watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, timeout: 5000, enableHighAccuracy: true });
+    } else {
+        gpsOn = false;
+    }
 });
 
