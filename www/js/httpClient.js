@@ -47,6 +47,8 @@ var httpClient = {
             queryString = data
         }
 
+        alert(queryString);
+
         xhr.open('POST', url, false);
         xhr.withCredentials = false;
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

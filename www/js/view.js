@@ -1,11 +1,13 @@
 function getLights(){
     var greenLights = [];
     var redLights = [];
-    var url = "https://6f01bc87.ngrok.io/api/v1/stopLights/" + device.uuid;
-    $.get(url, function (data, textStatus, jqXHR) {
-        console.log(data['stopLights'][0]['color']);
-        for (var i = 0; i < data['stopLights'].length; i++) {
-            var light = data['stopLights'][i];
+    var url = "https://theriehldeal.com/api/getLights.php?uuid=" + device.uuid;
+    $.get(url).done(function(data) {
+        var stopLights = JSON.parse(data);
+        console.log(stopLights);
+        //console.log(data['stopLights'][0]['color']);
+        for (var i = 0; i < stopLights.length; i++) {
+            var light = stopLights[i];
             if (light['color'] == "green") {
                 greenLights.push(light);
             } else if (light['color'] == "red") {
@@ -19,5 +21,11 @@ function getLights(){
         for (var i = 0; i < redLights.length; i++) {
             $('.redTable').append("<tr><td>" + redLights[i]['time'].split("GMT")[0] + "</td><td>" + redLights[i]['Lat'] + "</td><td>" + redLights[i]["Lon"] + "</td></tr>");
         }
+    }).fail(function(jqXHR, textStatus, errorThrown){
+        if (textStatus == 'timeout')
+            alert('The server is not responding');
+
+        if (textStatus == 'error')
+            alert(errorThrown);
     });
 }
