@@ -124,7 +124,14 @@ h1 {
 .view {
     content: hidden;
     display: none;
-    height: 90vh;
+    height: 100vh;
+    width: 100vw;
+}
+
+.chart {
+    content: hidden;
+    display: none;
+    height: 100vh;
     width: 100vw;
 }
 
@@ -189,6 +196,7 @@ h1 {
     border-bottom: #333 solid 5px;
     text-align: center;
     background: #fff;
+    z-index: 9999999999999999999;
 }
 
 
@@ -200,6 +208,7 @@ h1 {
     right: 0vw;
     border-left: #333 solid 5px;
     border-bottom: #333 solid 5px;
+    z-index: 9999999999999999999;
 }
 
 a.h1 {

@@ -29,3 +29,45 @@ function getLights(){
             alert(errorThrown);
     });
 }
+
+function viewChart(){
+    var greenLights = [];
+    var redLights = [];
+    var url = "https://theriehldeal.com/api/getLights.php?uuid=" + device.uuid;
+    $.get(url).done(function (data) {
+        var stopLights = JSON.parse(data);
+        console.log(stopLights);
+        //console.log(data['stopLights'][0]['color']);
+        for (var i = 0; i < stopLights.length; i++) {
+            var light = stopLights[i];
+            if (light['color'] == "green") {
+                greenLights.push(light);
+            } else if (light['color'] == "red") {
+                redLights.push(light);
+            }
+        }
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Red Lights VS. Green Lights"
+            },
+            data: [{
+                type: 'pie',
+                startAngle: 240,
+                yValueFormatString: "##0",
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                    { y: redLights.length, label: "Red Lights", color: 'red' },
+                    { y: greenLights.length, label: "Green Lights", color: 'green' }
+                ]
+            }]
+        });
+        chart.render();
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        if (textStatus == 'timeout')
+            alert('The server is not responding');
+
+        if (textStatus == 'error')
+            alert(errorThrown);
+    });
+}

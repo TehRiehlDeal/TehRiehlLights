@@ -40,6 +40,7 @@
         <script src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/httpClient.js"></script>
+        <script type="text/javascript" src="js/jquery.canvasjs.min.js"></script>
         <title>Red Light Green Light</title>
     </head>
     <body>
@@ -47,7 +48,7 @@
         <div class='green-light'></div>
         <div class='view'>
             <div class='view-green'>
-                <p class='h3 text-center'>Green Lights</p>
+                <p class='h1 text-center'>Green Lights</p>
                 <table class='table table-striped'>
                     <thead>
                         <tr>
@@ -62,7 +63,7 @@
                 </table>
             </div>
             <div class='view-red'>
-                <p class='h3 text-center'>Red Lights</p>
+                <p class='h1 text-center'>Red Lights</p>
                 <table class='table table-striped'>
                     <thead>
                         <tr>
@@ -92,9 +93,11 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item h1 view-lights" href="#">View Lights</a>
             <a class="dropdown-item h2" href="#">On Map</a>
-            <a class="dropdown-item h2" href="#">Pie Chart</a>
-            <a class="dropdown-item h2" href="#">View all</a>
+            <a class="dropdown-item h2 pie-chart" href="#">Pie Chart</a>
+            <a class="dropdown-item h2 view-lights" href="#">View all</a>
         </div>
+
+        <div class='chart' id='chartContainer'></div>
 
         <script src='js/view.js'></script>
         <script src="js/index.js"></script>

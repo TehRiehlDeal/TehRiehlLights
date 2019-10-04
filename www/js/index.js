@@ -40,6 +40,7 @@ $('.view-lights').click(function () {
     $('.redTable').empty();
     $('.red-light').hide();
     $('.green-light').hide();
+    $('chart').hide();
     $('.view').show();
     if(gpsOn == true){
         navigator.geolocation.clearWatch(watchID);
@@ -51,11 +52,22 @@ $('.add-lights').click(function () {
     animateMenu();
     $('.red-light').show();
     $('.green-light').show();
+    $('.chart').hide();
     $('.view').hide();
     if(gpsOn == false){
         watchID = navigator.geolocation.watchPosition(positionSuccess, postionError, { maximumAge: 3600000, timeout: 5000, enableHighAccuracy: true });
         gpsOn = true;
     }
+});
+
+$('.pie-chart').click(function(){
+    animateMenu();
+    $('.red-light').hide();
+    $('.green-light').hide();
+    $('.view').hide();
+    $('.chart').show();
+    viewChart();
+    
 });
 
 function positionSuccess(position) {
