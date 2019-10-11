@@ -40,7 +40,7 @@ $('.view-lights').click(function () {
     $('.redTable').empty();
     $('.red-light').hide();
     $('.green-light').hide();
-    $('chart').hide();
+    $('.chart').hide();
     $('.view').show();
     if(gpsOn == true){
         navigator.geolocation.clearWatch(watchID);
